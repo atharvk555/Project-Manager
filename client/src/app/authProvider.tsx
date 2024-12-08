@@ -1,7 +1,8 @@
 import React from "react";
-import { Authenticator } from "@aws-amplify/ui-react";
+import { Authenticator, PasswordField, Placeholder } from "@aws-amplify/ui-react";
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
+import { signIn } from "aws-amplify/auth";
 
 Amplify.configure({
   Auth: {
@@ -14,6 +15,14 @@ Amplify.configure({
 });
 
 const formFields = {
+  signIn:{
+    username:{
+      placeholder:"test (Dummy id to avoid signUp)",
+    },
+    password:{
+      placeholder:"Ath123@456789 (Dummy pass to avoid Signup)",
+    }
+  },
   signUp: {
     username: {
       order: 1,

@@ -10,6 +10,7 @@ import {
   Task,
   useGetAuthUserQuery,
   useGetTasksByUserQuery,
+  useGetTasksQuery,
 } from "@/state/api";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { useState } from "react";
@@ -59,18 +60,7 @@ const columns: GridColDef[] = [
     headerName: "Due Date",
     width: 130,
   },
-  {
-    field: "author",
-    headerName: "Author",
-    width: 150,
-    renderCell: (params) => params.value.username || "Unknown",
-  },
-  {
-    field: "assignee",
-    headerName: "Assignee",
-    width: 150,
-    renderCell: (params) => params.value.username || "Unassigned",
-  },
+  
 ];
 
 const ReusablePriorityPage = ({ priority }: Props) => {
@@ -83,9 +73,7 @@ const ReusablePriorityPage = ({ priority }: Props) => {
     data: tasks,
     isLoading,
     isError: isTasksError,
-  } = useGetTasksByUserQuery(userId || 0, {
-    skip: userId === null,
-  });
+  } = useGetTasksQuery({projectId:1});
 
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
