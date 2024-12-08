@@ -32,6 +32,7 @@ const ModalNewProject = ({ isOpen, onClose }: Props) => {
         startDate: formattedStartDate,
         endDate: formattedEndDate,
       });
+      alert("Check Sidebar for your Project")
       onClose();
     }
     catch(error){
