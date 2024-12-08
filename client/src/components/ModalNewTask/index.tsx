@@ -81,16 +81,21 @@ const ModalNewTask = ({ isOpen, onClose, id = null }: Props) => {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-2">
           <select
             className={selectStyles}
-            value={status}
-            onChange={(e) =>
-              setStatus(Status[e.target.value as keyof typeof Status])
-            }
+            value={Object.keys(Status).find((key) => Status[key as keyof typeof Status] === status) || ""}
+            onChange={(e) => {
+              const selectedKey = e.target.value as keyof typeof Status; // Get the selected key
+              const selectedValue = Status[selectedKey]; // Get the corresponding value
+              console.log("Selected key:", selectedKey); // Logs "ToDo", "WorkInProgress", etc.
+              console.log("Selected value:", selectedValue); // Logs "To Do", "Work In Progress", etc.
+              setStatus(selectedValue); // Update state with the value (e.g., "To Do")
+            }}
           >
             <option value="">Select Status</option>
-            <option value={Status.ToDo}>To Do</option>
-            <option value={Status.WorkInProgress}>Work In Progress</option>
-            <option value={Status.UnderReview}>Under Review</option>
-            <option value={Status.Completed}>Completed</option>
+              {Object.entries(Status).map(([key, value]) => (
+              <option key={key} value={key}>
+              {value}
+            </option>
+              ))}
           </select>
           <select
             className={selectStyles}
