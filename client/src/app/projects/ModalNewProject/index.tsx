@@ -24,13 +24,20 @@ const ModalNewProject = ({ isOpen, onClose }: Props) => {
     const formattedEndDate = formatISO(new Date(endDate), {
       representation: "complete",
     });
-
-    await createProject({
-      name: projectName,
-      description,
-      startDate: formattedStartDate,
-      endDate: formattedEndDate,
-    });
+    
+    try{
+      await createProject({
+        name: projectName,
+        description,
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
+      });
+      onClose();
+    }
+    catch(error){
+      console.log("Error creating project:",error);
+      alert("Error Creating Project");
+    }
   };
 
   const isFormValid = () => {

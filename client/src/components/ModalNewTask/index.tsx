@@ -31,23 +31,29 @@ const ModalNewTask = ({ isOpen, onClose, id = null }: Props) => {
     const formattedDueDate = formatISO(new Date(dueDate), {
       representation: "complete",
     });
-
-    await createTask({
-      title,
-      description,
-      status,
-      priority,
-      tags,
-      startDate: formattedStartDate,
-      dueDate: formattedDueDate,
-      authorUserId: parseInt(authorUserId),
-      assignedUserId: parseInt(assignedUserId),
-      projectId: id !== null ? Number(id) : Number(projectId),
-    });
+    try{
+      await createTask({
+        title,
+        description,
+        status,
+        priority,
+        tags,
+        startDate: formattedStartDate,
+        dueDate: formattedDueDate,
+        authorUserId: parseInt(authorUserId),
+        assignedUserId: parseInt(assignedUserId),
+        projectId: id !== null ? Number(id) : Number(projectId),
+      });
+      onClose();
+    }
+  catch(error){
+    console.error("Failed to create task:",error);
+    alert("An error occurred while creating the project. Please try again.");
+  }
   };
 
   const isFormValid = () => {
-    return title && authorUserId && (id !== null || projectId);
+    return title && authorUserId && (id !== null || projectId) &&(startDate) &&(dueDate);
   };
 
   const selectStyles =
